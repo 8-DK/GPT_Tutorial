@@ -1,0 +1,35 @@
+########### GPT J 6b
+
+import torch
+from transformers import GPTJForCausalLM, AutoTokenizer
+
+#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu")
+
+#model = torch.load("gptj.pt")
+#model = GPTJForCausalLM.from_pretrained("EleutherAI/gpt-j-6B", revision="float16", low_cpu_mem_usage=True)
+model = GPTJForCausalLM.from_pretrained("EleutherAI/gpt-j-6B", revision="float16", torch_dtype=torch.float16, low_cpu_mem_usage=True)
+model.to(device)
+tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
+
+prompt = "The Belgian national football team "
+input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
+
+generated_ids = model.generate(input_ids, do_sample=True, temperature=0.5, max_length=200)
+generated_text = tokenizer.decode(generated_ids[0])
+print(generated_text)
+
+########### GPT Neo 1.3b
+
+from transformers import GPTNeoForCausalLM, GPT2Tokenizer
+
+model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
+tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
+
+prompt ="write code for linear search."
+
+input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+
+gen_tokens = model.generate(input_ids,do_sample=True,temperature=0.9,max_length=500,)
+gen_text = tokenizer.batch_decode(gen_tokens)[0]
+print(gen_text)

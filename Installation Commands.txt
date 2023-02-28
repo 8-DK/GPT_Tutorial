@@ -1,0 +1,18 @@
+- Create virtual enviornmet	
+	conda create -n gpt 
+
+- Install cudatoolkit and cudnn
+	conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
+
+- Install tensorflow if we want run tf model
+	python -m pip install tensorflow==2.5.0
+
+- Install pytorch with cuda support
+	conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
+
+- Install Jupyter Note book	
+	pip install jupyter
+
+- Install required numpy library 
+	pip uninstall numpy
+	pip install numpy==1.21
